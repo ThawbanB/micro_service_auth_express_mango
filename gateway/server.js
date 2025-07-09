@@ -4,7 +4,13 @@ const proxy = require('express-http-proxy');
 
 const app = express();
 
-app.use('/', proxy('http://localhost:5000/auth'));
+const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://auth:5000/';
+
+app.use('/auth', proxy(authServiceUrl, {
+  proxyReqPathResolver: function(req) {
+    return req.originalUrl.replace(/^\/auth/, '') || '/';
+  }
+}));
 
 app.get('/', (req, res) => {
   res.send('API Gateway is running on port 3000');
