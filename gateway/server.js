@@ -4,17 +4,12 @@ const proxy = require('express-http-proxy');
 
 const app = express();
 
-const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://auth:5000/';
+// On garde toute l'URL d'origine sans la modifier
+const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://auth-service:5000';
 
 app.use('/auth', proxy(authServiceUrl, {
-  proxyReqPathResolver: function(req) {
-    return req.originalUrl.replace(/^\/auth/, '') || '/';
-  }
+  proxyReqPathResolver: (req) => req.originalUrl || '/',
 }));
-
-app.get('/', (req, res) => {
-  res.send('API Gateway is running on port 3000');
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

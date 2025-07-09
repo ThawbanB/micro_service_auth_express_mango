@@ -13,5 +13,5 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Serveur lancé sur le port ${port}`));
+const port = process.env.PORT || 5000;
+app.listen(port,'0.0.0.0', () => console.log(`Serveur lancé sur le port ${port}`));
