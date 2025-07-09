@@ -1,5 +1,5 @@
 services:
-  mongo:
+  mongo-auth:
     image: mongo:latest
     container_name: mongo-auth
     restart: always
@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile
     container_name: auth-service
     depends_on:
-      - mongo
+      - mongo-auth
     volumes:
     - ./auth:/app
     - /app/node_modules
